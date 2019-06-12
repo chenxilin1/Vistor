@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlkj.visitor.dao.DdwhDao">
+	<!-- 获取所有的地点名称 -->
+	<select id="findAll" resultType="Ddmc">
+		select * from entryinfo.ddmc 
+	</select>
+	<!-- 分页查询 -->
+	<select id="findAllFy" resultType="Ddmc"
+		parameterType="com.zlkj.visitor.dto.PulicCxtj">
+		select * from
+		entryinfo.ddmc
+		<where>
+			<if test="ddmc!=null and ddmc!=''">
+				address like #{ddmc}
+			</if>
+			<if test="ddmcsz!=null and ddmcsz!=''">
+				and address in 
+	            <foreach collection="ddmcsz" item="ddmcsz" index="index"
+                  open="(" close=")" separator=",">
+                  #{ddmcsz}
+                </foreach>
+			</if>
+		</where>
+		order by id ASC
+		limit #{page},#{rows}
+	</select>
+	<!-- 分页查询总数 -->
+	<select id="findAllFyCount" resultType="long"
+		parameterType="com.zlkj.visitor.dto.PulicCxtj">
+		select count(*) from entryinfo.ddmc
+		<where>
+			<if test="ddmc!=null and ddmc!=''">
+				address like #{ddmc}
+			</if>
+			<if test="ddmcsz!=null and ddmcsz!=''">
+				and address in 
+	            <foreach collection="ddmcsz" item="ddmcsz" index="index"
+                  open="(" close=")" separator=",">
+                  #{ddmcsz}
+                </foreach>
+			</if>
+		</where>
+	</select>	
+		<!-- 添加 -->
+	<insert id="add" parameterType="Ddmc">
+		insert into entryinfo.ddmc
+		<trim suffix=")" prefix="(" suffixOverrides=",">
+			<if test="address !=null">
+				address,
+			</if>
+		</trim>
+		<trim suffix=")" prefix=" values (" suffixOverrides=",">
+			<if test="address !=null">
+				#{address},
+			</if>
+		</trim>
+	</insert>
+	<!-- 添加 end -->
+	<!-- 删除信息 -->
+    <delete id="delete">
+    	delete from 
+    	entryinfo.ddmc WHERE id in
+    	<foreach collection="array" index="index" item="item"  open="(" separator="," close=")">
+			#{item}
+		</foreach>
+   	 </delete>
+    <!-- 删除信息end -->
+    <!-- 修改信息end -->
+	<update id="update">
+		update entryinfo.ddmc
+		<set>
+			<if test="address !=null">
+				address=#{address},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<!-- 地点编号 返回 地点名称 -->
+	<select id="ddbh2ddmc" resultType="String">
+		select address from entryinfo.ddmc where id=#{0}
+	</select>
+	<!-- 地点名称 返回 地点编号 -->
+	<select id="ddmc2ddbh" resultType="String">
+		select id from entryinfo.ddmc where address=#{0}
+	</select>
+</mapper>
+

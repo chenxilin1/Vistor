@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlkj.visitor.dao.TCodeDao">
+
+	<!-- 根据代码值查询代码名称 -->
+	<select id="dmzBydmmc" resultType="String"
+		parameterType="com.zlkj.visitor.dto.PulicCxtj">
+		select dmsm1 from entryinfo.t_code where dmz=#{0} and dmlb=#{1}
+	</select>
+		<!-- 根据代码名称查询代码值 -->
+	<select id="dmmcBydmz" resultType="String"
+		parameterType="com.zlkj.visitor.dto.PulicCxtj">
+		select dmz from entryinfo.t_code where dmsm1=#{0} and dmlb=#{1}
+	</select>
+	<!-- 查询所有的代码名称 -->
+	<select id="finListDmmc" resultType="TCode"
+		parameterType="com.zlkj.visitor.dto.PulicCxtj">
+		select * from entryinfo.t_code where dmlb=#{0}
+	</select>
+</mapper>
+

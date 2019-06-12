@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlkj.visitor.dao.FyqkTjDao">
+	<sql id="paramIdR">
+		<if test="tjfs==1">
+			DATE_FORMAT(fqsj,'%Y年')
+		</if>
+		<if test="tjfs==2">
+			DATE_FORMAT(fqsj,'%Y年%m月')
+		</if>
+		<if test="tjfs==3">
+			DATE_FORMAT(fqsj,'%Y年%m月%d日')
+		</if>
+		<if test="tjfs==4">
+			DATE_FORMAT(fqsj,'%Y年%m月%d日 %H时')
+		</if>
+	</sql>
+	<sql id="paramIdC">
+		<if test="tjfs==1">
+			DATE_FORMAT(fqrq,'%Y年')
+		</if>
+		<if test="tjfs==2">
+			DATE_FORMAT(fqrq,'%Y年%m月')
+		</if>
+		<if test="tjfs==3">
+			DATE_FORMAT(fqrq,'%Y年%m月%d日')
+		</if>
+		<if test="tjfs==4">
+			DATE_FORMAT(fqrq,'%Y年%m月%d日 %H时')
+		</if>
+	</sql>
+	<!--查询统计图 -->
+	<select id="finTjt" resultType="com.zlkj.visitor.dto.TjtCsDto"
+		parameterType="com.zlkj.visitor.dto.TjtCsDto">
+		<if test="bqlx==0">
+			select <include refid="paramIdR"></include> as txsj,sum(je*1.0) as sl from entryinfo.t_jsrk
+			<where>
+			<if test="kssj!=null and kssj !='' and jssj!=null and jssj!='' ">
+				and fqsj >= #{kssj} 
+				and fqsj <![CDATA[<=]]> #{jssj}
+			</if>
+		</where>
+		</if>
+		<if test="bqlx==1">
+			select <include refid="paramIdC"></include> as txsj,sum(je*1.0) as sl from entryinfo.t_allmsg
+			<where>
+			<if test="kssj!=null and kssj !='' and jssj!=null and jssj!='' ">
+				and fqrq >= #{kssj} 
+				and fqrq <![CDATA[<=]]> #{jssj}
+			</if>
+		</where>
+		</if>
+		
+		group by(txsj)
+	</select>
+
+</mapper>
+

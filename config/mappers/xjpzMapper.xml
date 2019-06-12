@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlkj.visitor.dao.XjpzDao">
+	<!-- 获取所有的相机名称 -->
+	<select id="findAllSb" resultType="TXjpz">
+		select * from entryinfo.t_xjpz
+	</select>
+	<!-- 获取该相机名称下的所有预置点 -->
+	<select id="findByXjip" resultType="TXjpz">
+		select * from entryinfo.t_xjpz where xjip=#{0}
+	</select>
+	<!-- 获取该相机名称的详细信息 -->
+	<select id="findByXjmc" resultType="TXjpz">
+		select * from entryinfo.t_xjpz where xjmc=#{0}
+	</select>
+		<!-- add -->
+	<insert id="save" parameterType="TXjpz">
+		insert into entryinfo.t_xjpz
+		<trim suffix=")" prefix="(" suffixOverrides=",">
+			<if test="xjmc !=null">
+				xjmc,
+			</if>
+			<if test="ddmc !=null" >
+				ddmc,
+			</if>
+			<if test="xjip !=null" >
+				xjip,
+			</if>
+			<if test="xjtd !=null" >
+				xjtd,
+			</if>
+			<if test="xjzh !=null" >
+				xjzh,
+			</if>
+			<if test="xjmm !=null" >
+				xjmm,
+			</if>
+		</trim>
+		<trim suffix=")" prefix=" values (" suffixOverrides=",">
+			<if test="xjmc !=null">
+				#{xjmc},
+			</if>
+			<if test="ddmc !=null" >
+				#{ddmc},
+			</if>
+			<if test="xjip !=null" >
+				#{xjip},
+			</if>
+			<if test="xjtd !=null" >
+				#{xjtd},
+			</if>
+			<if test="xjzh !=null" >
+				#{xjzh},
+			</if>
+			<if test="xjmm !=null" >
+				#{xjmm},
+			</if>
+		</trim>
+	</insert>
+		<!-- 删除信息 -->
+    <delete id="deleteXjmc">
+    	delete from 
+    	entryinfo.t_xjpz WHERE xjmc = #{0}
+   	 </delete>
+    <!-- 删除信息end -->
+    <!-- 修改信息end -->
+	<update id="updateXjmc">
+		update entryinfo.t_xjpz
+		<set>
+			<if test="ddmc !=null">
+				ddmc = #{ddmc},
+			</if>
+			<if test="xjip !=null" >
+				xjip = #{xjip},
+			</if>
+			<if test="xjtd !=null">
+				xjtd = #{xjtd},
+			</if>
+			<if test="xjzh !=null" >
+				xjzh=#{xjzh},
+			</if>
+			<if test="xjmm !=null" >
+				xjmm=#{xjmm},
+			</if>
+		</set>
+		where xjmc = #{xjmc}
+	</update>	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>
+

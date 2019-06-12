@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlkj.visitor.dao.TUserDao">
+	<!-- 获取权限码 -->
+	<select id="findByUserQxm" resultType="Tmenus">
+		select * from entryinfo.t_menus where tid in
+		<foreach collection="array" item="item" index="index" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+		order by tid ASC
+	</select>
+	<!-- 得到顶级节点 -->
+	<select id="queryByPid" resultType="Tmenus">
+		select * from entryinfo.t_menus
+		t where t.pid = #{pid}
+	</select>
+	<!-- 根据父节点查询子节点id -->
+	<select id="findByCodeWithString" resultType="String">
+		select t.tid from entryinfo.t_menus
+		t where t.pid = #{pid}
+	</select>
+
+	<!-- 根据用户名和密码查询 -->
+	<select id="findUserAndPwd" resultType="Tuser"
+	 parameterType="com.zlkj.visitor.dto.UserAndPwd">
+		select * from entryinfo.t_user
+		t where t.yhm=#{yhm} and t.yhmm=#{yhmm}
+	</select>
+	<!-- 根据用户id查询 -->
+	<select id="findByyhid" resultType="Tuser">
+		select * from entryinfo.t_user t where t.yhid=#{0}
+	</select>
+	<!-- 根据用户名查询 -->
+	<select id="findByyhm" resultType="Tuser">
+		select * from entryinfo.t_user t where t.yhm=#{yhm}
+	</select>
+		<!-- 添加 -->
+	<insert id="addUser" parameterType="Tuser">
+		insert into entryinfo.t_user
+		<trim suffix=")" prefix="(" suffixOverrides=",">
+			<if test="yhm !=null">
+				yhm,
+			</if>
+			<if test="yhmm !=null" >
+				yhmm,
+			</if>
+			<if test="sex !=null" >
+				sex,
+			</if>
+			<if test="yhqx !=null" >
+				yhqx,
+			</if>
+			<if test="yhid !=null" >
+				yhid,
+			</if>
+			<if test="isAdmin !=null" >
+				isAdmin,
+			</if>
+			<if test="ktxdd !=null" >
+				ktxdd,
+			</if>
+		</trim>
+		<trim suffix=")" prefix=" values (" suffixOverrides=",">
+			<if test="yhm !=null">
+				#{yhm},
+			</if>
+			<if test="yhmm !=null" >
+				#{yhmm},
+			</if>
+			<if test="sex !=null" >
+				#{sex},
+			</if>
+			<if test="yhqx !=null" >
+				#{yhqx},
+			</if>
+			<if test="yhid !=null" >
+				#{yhid},
+			</if>
+			<if test="isAdmin !=null" >
+				#{isAdmin},
+			</if>
+			<if test="ktxdd !=null" >
+				#{ktxdd},
+			</if>
+		</trim>
+	</insert>
+	<!-- 添加 end -->
+	<!-- 删除信息 -->
+    <delete id="deleteUser">
+    	delete from 
+    	entryinfo.t_user WHERE yhid in
+    	<foreach collection="array" index="index" item="item"  open="(" separator="," close=")">
+			#{item}
+		</foreach>
+   	 </delete>
+    <!-- 删除信息end -->
+    <!-- 修改信息end -->
+	<update id="updateUser">
+		update entryinfo.t_user
+		<set>
+			<if test="sex !=null" >
+				sex = #{sex},
+			</if>
+			<if test="yhqx !=null">
+				yhqx = #{yhqx},
+			</if>
+			<if test="isAdmin !=null" >
+				isAdmin=#{isAdmin},
+			</if>
+			<if test="ktxdd !=null" >
+				ktxdd=#{ktxdd},
+			</if>
+		</set>
+		where yhid = #{yhid}
+	</update>
+    <!-- 修改信息end -->
+    <!-- 修改密码 -->
+	<update id="updUser_mm">
+		update entryinfo.t_user set yhmm = #{1} where yhm = #{0}
+	</update>
+	
+	
+	<!-- ======================================================== -->
+	<!-- 分页查询 -->
+	<select id="finAllFy" resultType="TUser"
+		parameterType="com.zlkj.visitor.dto.PulicCxtj">
+		select * from
+		entryinfo.t_user
+		<where>
+			<if test="qxjb!=null and qxjb!=''">
+				isAdmin not in
+				<foreach collection="qxjb" index="index" item="qxjb"  open="(" separator="," close=")">
+					#{qxjb}
+				</foreach>
+			</if>
+			<if test="ddmcsz!=null and ddmcsz!=''">
+				and  1=1 and
+	            <foreach collection="ddmcsz" item="ddmcsz" index="index"
+                  open="(" close=")" separator="or">
+                  ktxdd like #{ddmcsz}
+                </foreach>
+			</if>
+		</where>
+		order by yhid ASC
+		limit #{page},#{rows}
+	</select>
+	<!-- 分页查询总数 -->
+	<select id="findAllFyCount" resultType="long"
+		parameterType="com.zlkj.visitor.dto.PulicCxtj">
+		select count(*) from entryinfo.t_user
+		<where>
+			<if test="qxjb!=null and qxjb!=''">
+				isAdmin not in
+				<foreach collection="qxjb" index="index" item="qxjb"  open="(" separator="," close=")">
+					#{qxjb}
+				</foreach>
+			</if>
+			<if test="ddmcsz!=null and ddmcsz!=''">
+				and  1=1 and
+	            <foreach collection="ddmcsz" item="ddmcsz" index="index"
+                  open="(" close=")" separator="or">
+                  ktxdd like #{ddmcsz}
+                </foreach>
+			</if>
+		</where>
+	</select>	
+	<!-- 查询用户名的唯一性 -->
+	<select id="findByYhmWy" resultType="TUser">
+		select * from entryinfo.t_user where yhm = #{0}
+	</select>
+	<!-- 根据用户名查询-->
+	<select id="findByName" resultType="TUser">
+		select * from entryinfo.t_user t where t.yhm=#{name}
+	</select>
+	<!-- 查询返回所有用户 -->
+	<select id="findAllUser" resultType="TUser">
+		select * from entryinfo.t_user
+	</select>
+	
+	
+</mapper>
+

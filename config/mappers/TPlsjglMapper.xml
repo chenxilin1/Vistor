@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlkj.visitor.dao.PlsjglDao">
+
+	<!-- 添加机动车数据 -->
+	<insert id="cshjdcsj" parameterType="TAllmsg">
+		insert into entryinfo.t_allmsg
+		<trim suffix=")" prefix="(" suffixOverrides=",">
+			<if test="bqid !=null">
+				bqid,
+			</if>
+			<if test="hphm !=null">
+				hphm,
+			</if>
+			<if test="hpzl !=null">
+				hpzl,
+			</if>
+			<if test="clpp !=null">
+				clpp,
+			</if>
+			<if test="clxh !=null">
+				clxh,
+			</if>
+			<if test="syr !=null">
+				syr,
+			</if>
+			<if test="csys !=null">
+				csys,
+			</if>
+			<if test="fdjh !=null">
+				fdjh,
+			</if>
+			<if test="clsbdh !=null">
+				clsbdh,
+			</if>
+			<if test="sfzmhm !=null">
+				sfzmhm,
+			</if>
+			<if test="ccdjrq !=null">
+				ccdjrq,
+			</if>
+			<if test="fprq !=null">
+				fprq,
+			</if>
+			<if test="djry !=null">
+				djry,
+			</if>
+			<if test="lxdh !=null">
+				lxdh,
+			</if>
+			<if test="cllx !=null">
+				cllx,
+			</if>
+			<if test="fqrq !=null">
+				fqrq,
+			</if>
+			<if test="xqrq !=null">
+				xqrq,
+			</if>
+			<if test="bqzt !=null">
+				bqzt,
+			</if>
+			<if test="id !=null">
+				id,
+			</if>
+			<if test="mz !=null">
+				mz,
+			</if>
+			<if test="ssdw !=null">
+				ssdw,
+			</if>
+			<if test="je !=null">
+				je,
+			</if>
+			<if test="nwb !=null">
+				nwb,
+			</if>
+			<if test="ktxdd !=null">
+				ktxdd,
+			</if>
+			<if test="ssks !=null">
+				ssks,
+			</if>
+			<if test="fcphm !=null">
+				fcphm,
+			</if>
+			<if test="yxjzrq !=null">
+				yxjzrq,
+			</if>
+			<if test="ld !=null">
+				ld,
+			</if>
+			<if test="sctpdz !=null">
+				sctpdz,
+			</if>
+		</trim>
+		<trim suffix=")" prefix=" values (" suffixOverrides=",">
+			<if test="bqid !=null">
+				#{bqid},
+			</if>
+			<if test="hphm !=null">
+				#{hphm},
+			</if>
+			<if test="hpzl !=null">
+				#{hpzl},
+			</if>
+			<if test="clpp !=null">
+				#{clpp},
+			</if>
+			<if test="clxh !=null">
+				#{clxh},
+			</if>
+			<if test="syr !=null">
+				#{syr},
+			</if>
+			<if test="csys !=null">
+				#{csys},
+			</if>
+			<if test="fdjh !=null">
+				#{fdjh},
+			</if>
+			<if test="clsbdh !=null">
+				#{clsbdh},
+			</if>
+			<if test="sfzmhm !=null">
+				#{sfzmhm},
+			</if>
+			<if test="ccdjrq !=null">
+				#{ccdjrq},
+			</if>
+			<if test="fprq !=null">
+				#{fprq},
+			</if>
+			<if test="djry !=null">
+				#{djry},
+			</if>
+			<if test="lxdh !=null">
+				#{lxdh},
+			</if>
+			<if test="cllx !=null">
+				#{cllx},
+			</if>
+			<if test="fqrq !=null">
+				#{fqrq},
+			</if>
+			<if test="xqrq !=null">
+				#{xqrq},
+			</if>
+			<if test="bqzt !=null">
+				#{bqzt},
+			</if>
+			<if test="id !=null">
+				#{id},
+			</if>
+			<if test="mz !=null">
+				#{mz},
+			</if>
+			<if test="ssdw !=null">
+				#{ssdw},
+			</if>
+			<if test="je !=null">
+				#{je},
+			</if>
+			<if test="nwb !=null">
+				#{nwb},
+			</if>
+			<if test="ktxdd !=null">
+				#{ktxdd},
+			</if>
+			<if test="ssks !=null">
+				#{ssks},
+			</if>
+			<if test="fcphm !=null">
+				#{fcphm},
+			</if>
+			<if test="yxjzrq !=null">
+				#{yxjzrq},
+			</if>
+			<if test="ld !=null">
+				#{ld},
+			</if>
+			<if test="sctpdz !=null">
+				#{sctpdz},
+			</if>
+		</trim>
+	</insert>
+	<!-- 添加机动车数据 end -->
+	
+	<update id="updetejdcsj">
+		update entryinfo.t_allmsg
+		<set>
+			<if test="bqid !=null">
+				bqid= #{bqid},
+			</if>
+			<if test="hpzl !=null">
+				hpzl= #{hpzl},
+			</if>
+			<if test="clpp !=null">
+				clpp= #{clpp},
+			</if>
+			<if test="clxh !=null">
+				clxh= #{clxh},
+			</if>
+			<if test="syr !=null">
+				syr= #{syr},
+			</if>
+			<if test="csys !=null">
+				csys= #{csys},
+			</if>
+			<if test="fdjh !=null">
+				fdjh= #{fdjh},
+			</if>
+			<if test="clsbdh !=null">
+				clsbdh= #{clsbdh},
+			</if>
+			<if test="sfzmhm !=null">
+				sfzmhm= #{sfzmhm},
+			</if>
+			<if test="ccdjrq !=null">
+				ccdjrq= #{ccdjrq},
+			</if>
+			<if test="fprq !=null">
+				fprq= #{fprq},
+			</if>
+			<if test="djry !=null">
+				djry= #{djry},
+			</if>
+			<if test="lxdh !=null">
+				lxdh= #{lxdh},
+			</if>
+			<if test="cllx !=null">
+				cllx= #{cllx},
+			</if>
+			<if test="fqrq !=null">
+				fqrq= #{fqrq},
+			</if>
+			<if test="xqrq !=null">
+				xqrq= #{xqrq},
+			</if>
+			<if test="bqzt !=null">
+				bqzt= #{bqzt},
+			</if>
+			<if test="id !=null">
+				id= #{id},
+			</if>
+			<if test="mz !=null">
+				mz= #{mz},
+			</if>
+			<if test="ssdw !=null">
+				ssdw= #{ssdw},
+			</if>
+			<if test="je !=null">
+				je= #{je},
+			</if>
+			<if test="nwb !=null">
+				nwb= #{nwb},
+			</if>
+			<if test="ktxdd !=null">
+				ktxdd= #{ktxdd},
+			</if>
+			<if test="ssks !=null">
+				ssks= #{ssks},
+			</if>
+			<if test="fcphm !=null">
+				fcphm=#{fcphm},
+			</if>
+			<if test="yxjzrq !=null">
+				yxjzrq=#{yxjzrq},
+			</if>
+			<if test="ld !=null">
+				ld=#{ld},
+			</if>
+			<if test="sctpdz !=null">
+				sctpdz=#{sctpdz},
+			</if>
+		</set>
+		where hphm = #{hphm}
+	</update>
+	<!-- 根据号牌号码查询 -->
+	<select id="findByhphm" resultType="TAllmsg">
+		select * from entryinfo.t_allmsg where hphm=#{0}
+	</select>
+	<!-- 根据id查询 -->
+	<select id="findByJdcId" resultType="TAllmsg">
+		select * from entryinfo.t_allmsg where id=#{0}
+	</select>
+	<!-- ================================================================================== -->
+		<!-- 添加驾驶人数据 -->
+	<insert id="cshjsrsj" parameterType="TJsrk">
+		insert into entryinfo.t_jsrk
+		<trim suffix=")" prefix="(" suffixOverrides=",">
+			<if test="bqid !=null">
+				bqid,
+			</if>
+			<if test="syr !=null">
+				syr,
+			</if>
+			<if test="sex !=null">
+				sex,
+			</if>
+			<if test="gj !=null">
+				gj,
+			</if>
+			<if test="zz !=null">
+				zz,
+			</if>
+			<if test="sfzh !=null">
+				sfzh,
+			</if>
+			<if test="csrq !=null">
+				csrq,
+			</if>
+			<if test="cclzrq !=null">
+				cclzrq,
+			</if>
+			<if test="zjcx !=null">
+				zjcx,
+			</if>
+			<if test="yxq !=null">
+				yxq,
+			</if>
+			<if test="dabh !=null">
+				dabh,
+			</if>
+			<if test="bfdw !=null">
+				bfdw,
+			</if>
+			<if test="zt !=null">
+				zt,
+			</if>
+			<if test="fqsj !=null">
+				fqsj,
+			</if>
+			<if test="zxsj !=null">
+				zxsj,
+			</if>
+			<if test="fzrq !=null">
+				fzrq,
+			</if>
+			<if test="dqsj !=null">
+				dqsj,
+			</if>
+			<if test="ssdw !=null">
+				ssdw,
+			</if>
+			<if test="je !=null">
+				je,
+			</if>
+			<if test="nwb !=null">
+				nwb,
+			</if>
+			<if test="ktxdd !=null">
+				ktxdd,
+			</if>
+			<if test="cphm !=null">
+				cphm,
+			</if>
+			<if test="yxjzrq !=null">
+				yxjzrq,
+			</if>
+			<if test="ld !=null">
+				ld,
+			</if>
+			<if test="sctpdz !=null">
+				sctpdz,
+			</if>
+		</trim>
+		<trim suffix=")" prefix=" values (" suffixOverrides=",">
+			<if test="bqid !=null">
+				#{bqid},
+			</if>
+			<if test="syr !=null">
+				#{syr},
+			</if>
+			<if test="sex !=null">
+				#{sex},
+			</if>
+			<if test="gj !=null">
+				#{gj},
+			</if>
+			<if test="zz !=null">
+				#{zz},
+			</if>
+			<if test="sfzh !=null">
+				#{sfzh},
+			</if>
+			<if test="csrq !=null">
+				#{csrq},
+			</if>
+			<if test="cclzrq !=null">
+				#{cclzrq},
+			</if>
+			<if test="zjcx !=null">
+				#{zjcx},
+			</if>
+			<if test="yxq !=null">
+				#{yxq},
+			</if>
+			<if test="dabh !=null">
+				#{dabh},
+			</if>
+			<if test="bfdw !=null">
+				#{bfdw},
+			</if>
+			<if test="zt !=null">
+				#{zt},
+			</if>
+			<if test="fqsj !=null">
+				#{fqsj},
+			</if>
+			<if test="zxsj !=null">
+				#{zxsj},
+			</if>
+			<if test="fzrq !=null">
+				#{fzrq},
+			</if>
+			<if test="dqsj !=null">
+				#{dqsj},
+			</if>
+			<if test="ssdw !=null">
+				#{ssdw},
+			</if>
+			<if test="je !=null">
+				#{je},
+			</if>
+			<if test="nwb !=null">
+				#{nwb},
+			</if>
+			<if test="ktxdd !=null">
+				#{ktxdd},
+			</if>
+			<if test="cphm !=null">
+				#{cphm},
+			</if>
+			<if test="yxjzrq !=null">
+				#{yxjzrq},
+			</if>
+			<if test="ld !=null">
+				#{ld},
+			</if>
+			<if test="sctpdz !=null">
+				#{sctpdz},
+			</if>
+		</trim>
+	</insert>
+	<!-- 添加驾驶人数据 end -->
+		<update id="updetejsrsj">
+		update entryinfo.t_jsrk
+		<set>
+			<if test="bqid !=null">
+				bqid= #{bqid},
+			</if>
+			<if test="syr !=null">
+				syr= #{syr},
+			</if>
+			<if test="sex !=null">
+				sex= #{sex},
+			</if>
+			<if test="gj !=null">
+				gj= #{gj},
+			</if>
+			<if test="zz !=null">
+				zz= #{zz},
+			</if>
+			<if test="sfzh !=null">
+				sfzh= #{sfzh},
+			</if>
+			<if test="csrq !=null">
+				csrq= #{csrq},
+			</if>
+			<if test="cclzrq !=null">
+				cclzrq= #{cclzrq},
+			</if>
+			<if test="zjcx !=null">
+				zjcx= #{zjcx},
+			</if>
+			<if test="yxq !=null">
+				yxq= #{yxq},
+			</if>
+			<if test="dabh !=null">
+				dabh= #{dabh},
+			</if>
+			<if test="bfdw !=null">
+				bfdw= #{bfdw},
+			</if>
+			<if test="zt !=null">
+				zt= #{zt},
+			</if>
+			<if test="fqsj !=null">
+				fqsj= #{fqsj},
+			</if>
+			<if test="zxsj !=null">
+				zxsj= #{zxsj},
+			</if>
+			<if test="dqsj !=null">
+				dqsj= #{dqsj},
+			</if>
+			<if test="ssdw !=null">
+				ssdw= #{ssdw},
+			</if>
+			<if test="je !=null">
+				je= #{je},
+			</if>
+			<if test="nwb !=null">
+				nwb= #{nwb},
+			</if>
+			<if test="ktxdd !=null">
+				ktxdd=#{ktxdd},
+			</if>
+			<if test="cphm !=null">
+				cphm=#{cphm},
+			</if>
+			<if test="yxjzrq !=null">
+				yxjzrq=#{yxjzrq},
+			</if>
+			<if test="ld !=null">
+				ld=#{ld},
+			</if>
+			<if test="sctpdz !=null">
+				sctpdz=#{sctpdz},
+			</if>
+		</set>
+		where sfzh = #{sfzh}
+	</update>
+	<!-- 根据号牌号码查询 -->
+	<select id="findBysfzh" resultType="TJsrk">
+		select * from entryinfo.t_jsrk where sfzh=#{0}
+	</select>
+		<!-- 根据id查询 -->
+	<select id="findByJsrId" resultType="TJsrk">
+		select * from entryinfo.t_jsrk where id=#{0}
+	</select>
+	<!-- ================================================================================== -->
+		<!-- 初始化机动车标签库 -->
+	<insert id="cshjdcbqk" parameterType="TPlbqk">
+		insert into entryinfo.pljdcbq
+		<trim suffix=")" prefix="(" suffixOverrides=",">
+			<if test="bqid !=null">
+				bqid,
+			</if>
+		</trim>
+		<trim suffix=")" prefix=" values (" suffixOverrides=",">
+			<if test="bqid !=null">
+				#{bqid},
+			</if>
+		</trim>
+	</insert>
+	<!-- 初始化机动车标签库 end -->
+	<!-- 根据标签id查询 -->
+	<select id="finByjdcbqid" resultType="TPlbqk">
+		select * from entryinfo.pljdcbq where bqid=#{0}
+	</select>
+	<!-- ================================================================================== -->
+		<!-- 初始化驾驶人标签库 -->
+	<insert id="cshjsrbqk" parameterType="TPlbqk">
+		insert into entryinfo.pljsrbq
+		<trim suffix=")" prefix="(" suffixOverrides=",">
+			<if test="bqid !=null">
+				bqid,
+			</if>
+		</trim>
+		<trim suffix=")" prefix=" values (" suffixOverrides=",">
+			<if test="bqid !=null">
+				#{bqid},
+			</if>
+		</trim>
+	</insert>
+	<!-- 初始化驾驶人标签库 end -->
+	<!-- 根据标签id查询 -->
+	<select id="finByjsrbqid" resultType="TPlbqk">
+		select * from entryinfo.pljsrbq where bqid=#{0}
+	</select>
+	<!-- 备份机动车数据 -->
+	<select id="bfjdcsj" resultType="TAllmsg">
+		select * from entryinfo.t_allmsg
+	</select>
+	<!-- 备份机动车数据总数 -->
+	<select id="bfjdcsjCount" resultType="long">
+		select count(1) from entryinfo.t_allmsg
+	</select>
+	<!-- 备份驾驶人数据 -->
+	<select id="bfjsrsj" resultType="TJsrk">
+		select * from entryinfo.t_jsrk
+	</select>
+	<!-- 备份驾驶人数据总数 -->
+	<select id="bfjsrsjCount" resultType="long">
+		select count(1) from entryinfo.t_jsrk
+	</select>
+	<!-- 备份机动车标签 -->
+	<select id="bfjdcbq" resultType="TPlbqk">
+		select * from entryinfo.pljdcbq
+	</select>
+	<!-- 备份驾驶人标签 -->
+	<select id="bfjsrbq" resultType="TPlbqk">
+		select * from entryinfo.pljsrbq
+	</select>
+	
+	
+</mapper>
+

@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlkj.visitor.dao.TJdcbqglDao">
+
+	<!-- 分页查询 -->
+	<select id="findAllFy" resultType="TAllmsg"
+		parameterType="com.zlkj.visitor.dto.PulicCxtj">
+		select * FROM 
+		(select * from entryinfo.t_allmsg
+		UNION
+		select * from entryinfo.t_htallmsg) t
+		
+		<where>
+			<if test="bh==0">
+				and yxjzrq <![CDATA[<=]]> #{dqsj} 
+			</if>
+			<if test="bh==1">
+				and yxjzrq >= #{dqsj} 
+			</if>
+			<if test="bqffqk==0">
+				and bqid is not null
+			</if>
+			<if test="bqffqk==1">
+				and bqid is null
+			</if>
+			<if test="hpzl!=null and hpzl!=''">
+				and hpzl in 
+	            <foreach collection="hpzl" item="hpzl" index="index"
+                  open="(" close=")" separator=",">
+                  #{hpzl}
+                </foreach>
+			</if>
+			<if test="hphm!=null and hphm!=''">
+				and hphm like #{hphm}
+			</if>
+			<if test="syr!=null and syr!=''">
+				and syr like #{syr}
+			</if>
+			<if test="lxdh!=null and lxdh!=''">
+				and lxdh like #{lxdh}
+			</if>
+			<if test="ld!=null and ld!=''">
+				and ld like #{ld}
+			</if>
+			<if test="ssdw!=null and ssdw!=''">
+				and ssdw like #{ssdw}
+			</if>
+			<if test="kssj!=null and kssj !='' and jssj!=null and jssj!='' ">
+				and fqrq >=#{kssj} 
+				and fqrq <![CDATA[<=]]>#{jssj}
+			</if>
+			<if test="ddmcsz!=null and ddmcsz!=''">
+				and  
+	            <foreach collection="ddmcsz" item="ddmcsz" index="index"
+                  open="(" close=")" separator="or">
+                  ktxdd like #{ddmcsz}
+                </foreach>
+			</if>
+		</where>
+		order by id desc
+		limit #{page},#{rows}
+	</select>
+	<!-- 分页查询总数 -->
+	<select id="findAllFyCount" resultType="long"
+		parameterType="com.zlkj.visitor.dto.PulicCxtj">
+		select count(*) FROM 
+		(select * from entryinfo.t_allmsg
+		UNION
+		select * from entryinfo.t_htallmsg) t
+		<where>
+			<if test="bh==0">
+				and yxjzrq >=#{dqsj} 
+			</if>
+			<if test="bh==1">
+				and yxjzrq <![CDATA[<=]]> #{dqsj} 
+			</if>
+			<if test="bqffqk==0">
+				and bqid is not null
+			</if>
+			<if test="bqffqk==1">
+				and bqid is null
+			</if>
+			<if test="hpzl!=null and hpzl!=''">
+				and hpzl in 
+	            <foreach collection="hpzl" item="hpzl" index="index"
+                  open="(" close=")" separator=",">
+                  #{hpzl}
+                </foreach>
+			</if>
+			<if test="hphm!=null and hphm!=''">
+				and hphm like #{hphm}
+			</if>
+			<if test="syr!=null and syr!=''">
+				and syr like #{syr}
+			</if>
+			<if test="lxdh!=null and lxdh!=''">
+				and lxdh like #{lxdh}
+			</if>
+			<if test="ld!=null and ld!=''">
+				and ld like #{ld}
+			</if>
+			<if test="ssdw!=null and ssdw!=''">
+				and ssdw like #{ssdw}
+			</if>
+			<if test="kssj!=null and kssj !='' and jssj!=null and jssj!='' ">
+				and fqrq >=#{kssj} 
+				and fqrq <![CDATA[<=]]>#{jssj}
+			</if>
+			<if test="ddmcsz!=null and ddmcsz!=''">
+				and  
+	            <foreach collection="ddmcsz" item="ddmcsz" index="index"
+                  open="(" close=")" separator="or">
+                  ktxdd like #{ddmcsz}
+                </foreach>
+			</if>
+		</where>
+	</select>	
+	<!-- 根据id查询 -->
+	<select id="findById" resultType="TAllmsg">
+		<!-- select * FROM 
+		(select * from entryinfo.t_allmsg
+		UNION
+		select * from entryinfo.t_htallmsg) t
+		 -->
+		select * from entryinfo.t_allmsg
+		where id=#{0}
+	</select>	
+	<!-- 验证号牌号码的唯一 -->
+	<select id="findByHphm" resultType="TAllmsg">
+		select * from entryinfo.t_allmsg where hphm=#{0}
+	</select>	
+	<!-- 根据id和号牌号码查询 -->
+	<select id="findByIdAndHphm" resultType="TAllmsg">
+		select * FROM 
+		(select * from entryinfo.t_allmsg
+		UNION
+		select * from entryinfo.t_htallmsg) t
+		where id=#{0} and hphm=#{1}
+	</select>	
+	
+	<!-- 添加 -->
+	<insert id="add" parameterType="TAllmsg">
+		insert into entryinfo.t_allmsg
+		<trim suffix=")" prefix="(" suffixOverrides=",">
+			<if test="hphm !=null">
+				hphm,
+			</if>
+			<if test="hpzl !=null" >
+				hpzl,
+			</if>
+			<if test="cllx !=null" >
+				cllx,
+			</if>
+			<if test="syr !=null" >
+				syr,
+			</if>
+			<if test="csys !=null" >
+				csys,
+			</if>
+			<if test="clsbdh !=null" >
+				clsbdh,
+			</if>
+			<if test="fdjh !=null" >
+				fdjh,
+			</if>
+			<if test="ssdw !=null" >
+				ssdw,
+			</if>
+			<if test="clpp !=null" >
+				clpp,
+			</if>
+			<if test="ssks !=null" >
+				ssks,
+			</if>
+			<if test="lxdh !=null" >
+				lxdh,
+			</if>
+			<if test="fqrq !=null" >
+				fqrq,
+			</if>
+			<if test="je !=null" >
+				je,
+			</if>
+			<if test="bqzt !=null" >
+				bqzt,
+			</if>
+			<if test="ktxdd !=null" >
+				ktxdd,
+			</if>
+			<if test="sctpdz !=null" >
+				sctpdz,
+			</if>
+			<if test="ld !=null" >
+				ld,
+			</if>
+			<if test="yxjzrq !=null" >
+				yxjzrq,
+			</if>
+			<if test="fcphm !=null" >
+				fcphm,
+			</if>
+		</trim>
+		<trim suffix=")" prefix=" values (" suffixOverrides=",">
+			<if test="hphm !=null">
+				#{hphm},
+			</if>
+			<if test="hpzl !=null" >
+				#{hpzl},
+			</if>
+			<if test="cllx !=null" >
+				#{cllx},
+			</if>
+			<if test="syr !=null" >
+				#{syr},
+			</if>
+			<if test="csys !=null" >
+				#{csys},
+			</if>
+			<if test="clsbdh !=null" >
+				#{clsbdh},
+			</if>
+			<if test="fdjh !=null" >
+				#{fdjh},
+			</if>
+			<if test="ssdw !=null" >
+				#{ssdw},
+			</if>
+			<if test="clpp !=null" >
+				#{clpp},
+			</if>
+			<if test="ssks !=null" >
+				#{ssks},
+			</if>
+			<if test="lxdh !=null" >
+				#{lxdh},
+			</if>
+			<if test="fqrq !=null" >
+				#{fqrq},
+			</if>
+			<if test="je !=null" >
+				#{je},
+			</if>
+			<if test="bqzt !=null" >
+				#{bqzt},
+			</if>
+			<if test="ktxdd !=null" >
+				#{ktxdd},
+			</if>
+			<if test="sctpdz !=null" >
+				#{sctpdz},
+			</if>
+			<if test="ld !=null" >
+				#{ld},
+			</if>
+			<if test="yxjzrq !=null" >
+				#{yxjzrq},
+			</if>
+			<if test="fcphm !=null" >
+				#{fcphm},
+			</if>
+		</trim>
+	</insert>
+	<!-- 添加 end -->
+	<!-- 注销信息 -->
+   	 <update id="zhuxiao">
+		update entryinfo.t_allmsg set yxjzrq = #{1} where id = #{0}
+	</update>
+    <!-- 注销信息 end -->	
+	<!-- 删除信息 -->
+    <delete id="delete">
+    	delete from 
+    	entryinfo.t_allmsg WHERE id in
+    	<foreach collection="array" index="index" item="item"  open="(" separator="," close=")">
+			#{item}
+		</foreach>
+   	 </delete>
+    <!-- 删除信息end -->
+	<!-- 修改信息 -->
+	<update id="update">
+		update entryinfo.t_allmsg
+		<set>
+			<if test="hphm !=null" >
+				hphm=#{zhi},
+			</if>
+			<if test="hpzl !=null" >
+				hpzl=#{hpzl},
+			</if>
+			<if test="cllx !=null" >
+				cllx=#{cllx},
+			</if>
+			<if test="syr !=null" >
+				syr=#{syr},
+			</if>
+			<if test="csys !=null" >
+				csys=#{csys},
+			</if>
+			<if test="clsbdh !=null" >
+				clsbdh=#{clsbdh},
+			</if>
+			<if test="fdjh !=null" >
+				fdjh=#{fdjh},
+			</if>
+			<if test="ssdw !=null" >
+				ssdw=#{ssdw},
+			</if>
+			<if test="clpp !=null" >
+				clpp=#{clpp},
+			</if>
+			<if test="ssks !=null" >
+				ssks=#{ssks},
+			</if>
+			<if test="lxdh !=null" >
+				lxdh=#{lxdh},
+			</if>
+			<if test="fqrq !=null" >
+				fqrq=#{fqrq},
+			</if>
+			<if test="je !=null" >
+				je=#{je},
+			</if>
+			<if test="bqzt !=null" >
+				bqzt=#{bqzt},
+			</if>
+			<if test="ktxdd !=null" >
+				ktxdd=#{ktxdd},
+			</if>
+			<if test="sctpdz !=null" >
+				sctpdz=#{sctpdz},
+			</if>
+			<if test="ld !=null" >
+				ld=#{ld},
+			</if>
+			<if test="yxjzrq !=null" >
+				yxjzrq=#{yxjzrq},
+			</if>
+			<if test="fcphm !=null" >
+				fcphm=#{fcphm},
+			</if>
+		</set>
+		where hphm=#{hphm}
+	</update>
+	
+	<!-- 转存添加 -->
+	<insert id="addZx" parameterType="TAllmsg">
+		insert into entryinfo.t_htallmsg
+		<trim suffix=")" prefix="(" suffixOverrides=",">
+			
+			<if test="hphm !=null">
+				hphm,
+			</if>
+			<if test="hpzl !=null" >
+				hpzl,
+			</if>
+			<if test="cllx !=null" >
+				cllx,
+			</if>
+			<if test="syr !=null" >
+				syr,
+			</if>
+			<if test="csys !=null" >
+				csys,
+			</if>
+			<if test="clsbdh !=null" >
+				clsbdh,
+			</if>
+			<if test="fdjh !=null" >
+				fdjh,
+			</if>
+			<if test="ssdw !=null" >
+				ssdw,
+			</if>
+			<if test="clpp !=null" >
+				clpp,
+			</if>
+			<if test="ssks !=null" >
+				ssks,
+			</if>
+			<if test="lxdh !=null" >
+				lxdh,
+			</if>
+			<if test="fqrq !=null" >
+				fqrq,
+			</if>
+			<if test="xqrq !=null" >
+				xqrq,
+			</if>
+			<if test="je !=null" >
+				je,
+			</if>
+			<if test="bqzt !=null" >
+				bqzt,
+			</if>
+			<if test="ktxdd !=null" >
+				ktxdd,
+			</if>
+			<if test="sctpdz !=null" >
+				sctpdz,
+			</if>
+			<if test="ld !=null" >
+				ld,
+			</if>
+			<if test="yxjzrq !=null" >
+				yxjzrq,
+			</if>
+			<if test="fcphm !=null" >
+				fcphm,
+			</if>
+		</trim>
+		<trim suffix=")" prefix=" values (" suffixOverrides=",">
+			
+			<if test="hphm !=null">
+				#{hphm},
+			</if>
+			<if test="hpzl !=null" >
+				#{hpzl},
+			</if>
+			<if test="cllx !=null" >
+				#{cllx},
+			</if>
+			<if test="syr !=null" >
+				#{syr},
+			</if>
+			<if test="csys !=null" >
+				#{csys},
+			</if>
+			<if test="clsbdh !=null" >
+				#{clsbdh},
+			</if>
+			<if test="fdjh !=null" >
+				#{fdjh},
+			</if>
+			<if test="ssdw !=null" >
+				#{ssdw},
+			</if>
+			<if test="clpp !=null" >
+				#{clpp},
+			</if>
+			<if test="ssks !=null" >
+				#{ssks},
+			</if>
+			<if test="lxdh !=null" >
+				#{lxdh},
+			</if>
+			<if test="fqrq !=null" >
+				#{fqrq},
+			</if>
+			<if test="xqrq !=null" >
+				#{xqrq},
+			</if>
+			<if test="je !=null" >
+				#{je},
+			</if>
+			<if test="bqzt !=null" >
+				#{bqzt},
+			</if>
+			<if test="ktxdd !=null" >
+				#{ktxdd},
+			</if>
+			<if test="sctpdz !=null" >
+				#{sctpdz},
+			</if>
+			<if test="ld !=null" >
+				#{ld},
+			</if>
+			<if test="yxjzrq !=null" >
+				#{yxjzrq},
+			</if>
+			<if test="fcphm !=null" >
+				#{fcphm},
+			</if>
+		</trim>
+	</insert>
+	<!-- 转存添加 end -->	
+	<!-- 导出到Excel查询 -->
+	<select id="outExcel" resultType="TAllmsg"
+		parameterType="com.zlkj.visitor.dto.PulicCxtj">
+		select * FROM 
+		(select * from entryinfo.t_allmsg
+		UNION
+		select * from entryinfo.t_htallmsg) t
+		<where>
+			<if test="bh==0">
+				and yxjzrq <![CDATA[<=]]> #{dqsj} 
+			</if>
+			<if test="bh==1">
+				and yxjzrq >= #{dqsj} 
+			</if>
+			<if test="bqffqk==0">
+				and bqid is not null
+			</if>
+			<if test="bqffqk==1">
+				and bqid is null
+			</if>
+			<if test="hpzl!=null and hpzl!=''">
+				and hpzl in 
+	            <foreach collection="hpzl" item="hpzl" index="index"
+                  open="(" close=")" separator=",">
+                  #{hpzl}
+                </foreach>
+			</if>
+			<if test="hphm!=null and hphm!=''">
+				and hphm like #{hphm}
+			</if>
+			<if test="syr!=null and syr!=''">
+				and syr like #{syr}
+			</if>
+			<if test="lxdh!=null and lxdh!=''">
+				and lxdh like #{lxdh}
+			</if>
+			<if test="ld!=null and ld!=''">
+				and ld like #{ld}
+			</if>
+			<if test="ssdw!=null and ssdw!=''">
+				and ssdw like #{ssdw}
+			</if>
+			<if test="kssj!=null and kssj !='' and jssj!=null and jssj!='' ">
+				and fqrq >=#{kssj} 
+				and fqrq <![CDATA[<=]]>#{jssj}
+			</if>
+			<if test="ddmcsz!=null and ddmcsz!=''">
+				and  
+	            <foreach collection="ddmcsz" item="ddmcsz" index="index"
+                  open="(" close=")" separator="or">
+                  ktxdd like #{ddmcsz}
+                </foreach>
+			</if>
+		</where>
+		order by id desc
+	</select>
+	
+</mapper>
+

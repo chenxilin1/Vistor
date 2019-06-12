@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlkj.visitor.dao.TFkxxDao">
+
+	<!-- 分页查询 -->
+	<select id="findAllFy" resultType="TFkxx"
+		parameterType="com.zlkj.visitor.dto.PulicCxtj">
+		select * ,CASE 
+		WHEN Statar!=1 THEN '3'
+		WHEN #{dqsj} <![CDATA[<]]> visitStartTime THEN '1' 
+		WHEN #{dqsj} BETWEEN visitStartTime AND visitEndTime THEN '0' 
+		WHEN #{dqsj} > visitEndTime THEN '2' END zt 
+		from entryinfo.tuser
+		<where>
+			<if test="userName!=null and userName!=''">
+				and userName like #{userName}
+			</if>
+			<if test="email!=null and email!=''">
+				and email like #{email}
+			</if>
+			<if test="kssj!=null and kssj !='' and jssj!=null and jssj!='' ">
+				and createTime >=#{kssj} 
+				and createTime <![CDATA[<=]]>#{jssj}
+			</if>
+			<if test="ddmcsz!=null and ddmcsz!=''">
+				and  
+	            <foreach collection="ddmcsz" item="ddmcsz" index="index"
+                  open="(" close=")" separator="or">
+                  userpath like #{ddmcsz}
+                </foreach>
+			</if>
+		</where>
+		<!-- order by createTime desc -->
+		order by zt asc,visitStartTime asc
+		limit #{page},#{rows}
+	</select>
+	<!-- 分页查询总数 -->
+	<select id="findAllFyCount" resultType="long"
+		parameterType="com.zlkj.visitor.dto.PulicCxtj">
+		select count(*) from entryinfo.tuser
+		<where>
+			<if test="userName!=null and userName!=''">
+				and userName like #{userName}
+			</if>
+			<if test="email!=null and email!=''">
+				and email like #{email}
+			</if>
+			<if test="kssj!=null and kssj !='' and jssj!=null and jssj!='' ">
+				and createTime >=#{kssj} 
+				and createTime <![CDATA[<=]]>#{jssj}
+			</if>
+			<if test="ddmcsz!=null and ddmcsz!=''">
+				and 
+	            <foreach collection="ddmcsz" item="ddmcsz" index="index"
+                  open="(" close=")" separator="or">
+                  userpath like #{ddmcsz}
+                </foreach>
+			</if>
+		</where>
+	</select>	
+	<!-- 根据id查询 -->
+	<select id="findById" resultType="TCltxkb">
+		select * from entryinfo.tuser where id=#{0}
+	</select>	
+	<!-- 验证号牌号码的唯一 -->
+	<select id="findByHphm" resultType="TFkxx">
+		select * from entryinfo.tuser where hphm=#{0}
+	</select>	
+	
+			<!-- 添加 -->
+	<insert id="add" parameterType="TFkxx">
+		insert into entryinfo.tuser
+		<trim suffix=")" prefix="(" suffixOverrides=",">
+			<if test="email !=null">
+				email,
+			</if>
+			<if test="userName !=null" >
+				userName,
+			</if>
+			<if test="mz !=null" >
+				mz,
+			</if>
+			<if test="sex !=null" >
+				sex,
+			</if>
+			<if test="birthday !=null" >
+				birthday,
+			</if>
+			<if test="idCard !=null" >
+				idCard,
+			</if>
+			<if test="hphm !=null" >
+				hphm,
+			</if>
+			<if test="phone !=null" >
+				phone,
+			</if>
+			<if test="userpath !=null" >
+				userpath,
+			</if>
+			<if test="editor !=null" >
+				editor,
+			</if>
+			<if test="visitStartTime !=null" >
+				visitStartTime,
+			</if>
+			<if test="visitEndTime !=null" >
+				visitEndTime,
+			</if>
+			<if test="createTime !=null" >
+				createTime,
+			</if>
+			<if test="writer !=null" >
+				writer,
+			</if>
+			<if test="fkyy !=null" >
+				fkyy,
+			</if>
+		</trim>
+		<trim suffix=")" prefix=" values (" suffixOverrides=",">
+			<if test="email !=null">
+				#{email},
+			</if>
+			<if test="userName !=null" >
+				#{userName},
+			</if>
+			<if test="mz !=null" >
+				#{mz},
+			</if>
+			<if test="sex !=null" >
+				#{sex},
+			</if>
+			<if test="birthday !=null" >
+				#{birthday},
+			</if>
+			<if test="idCard !=null" >
+				#{idCard},
+			</if>
+			<if test="hphm !=null" >
+				#{hphm},
+			</if>
+			<if test="phone !=null" >
+				#{phone},
+			</if>
+			<if test="userpath !=null" >
+				#{userpath},
+			</if>
+			<if test="editor !=null" >
+				#{editor},
+			</if>
+			<if test="visitStartTime !=null" >
+				#{visitStartTime},
+			</if>
+			<if test="visitEndTime !=null" >
+				#{visitEndTime},
+			</if>
+			<if test="createTime !=null" >
+				#{createTime},
+			</if>
+			<if test="writer !=null" >
+				#{writer},
+			</if>
+			<if test="fkyy !=null" >
+				#{fkyy},
+			</if>
+		</trim>
+	</insert>
+	<!-- 添加 end -->
+	<!-- 注销信息 -->
+   	 <update id="zhuxiao">
+		update entryinfo.tuser set Statar = '0' where id = #{0}
+	</update>
+    <!-- 注销信息 end -->	
+	   <!-- 修改信息end -->
+	<update id="update">
+		update entryinfo.tuser
+		<set>
+			<if test="email !=null">
+				email = #{email},
+			</if>
+			<if test="userName !=null" >
+				userName = #{userName},
+			</if>
+			<if test="mz !=null" >
+				mz = #{mz},
+			</if>
+			<if test="sex !=null" >
+				sex = #{sex},
+			</if>
+			<if test="birthday !=null" >
+				birthday = #{birthday},
+			</if>
+			<if test="idCard !=null" >
+				idCard = #{idCard},
+			</if>
+			<if test="hphm !=null" >
+				hphm = #{hphm},
+			</if>
+			<if test="phone !=null" >
+				phone = #{phone},
+			</if>
+			<if test="userpath !=null" >
+				userpath = #{userpath},
+			</if>
+			<if test="editor !=null" >
+				editor = #{editor},
+			</if>
+			<if test="visitStartTime !=null" >
+				visitStartTime = #{visitStartTime},
+			</if>
+			<if test="visitEndTime !=null" >
+				visitEndTime = #{visitEndTime},
+			</if>
+			<if test="createTime !=null" >
+				createTime = #{createTime},
+			</if>
+			<if test="writer !=null" >
+				writer = #{writer},
+			</if>
+			<if test="fkyy !=null" >
+				fkyy = #{fkyy},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	
+	
+	
+	
+</mapper>
+

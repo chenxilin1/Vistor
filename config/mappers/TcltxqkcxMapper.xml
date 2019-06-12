@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlkj.visitor.dao.TCltxqkcxDao">
+
+	<!-- 分页查询 -->
+	<select id="findAllFy" resultType="TCltxkb"
+		parameterType="com.zlkj.visitor.dto.PulicCxtj">
+		select * from
+		entryinfo.t_cltxkb
+		<where>
+			<if test="xjfx!=null and xjfx!=''">
+				and fx=#{xjfx}
+			</if>
+			<if test="txzt!=null and txzt!=''">
+				and txzt=#{txzt}
+			</if>
+			<if test="hpzl!=null and hpzl!=''">
+				and hpzl in 
+	            <foreach collection="hpzl" item="hpzl" index="index"
+                  open="(" close=")" separator=",">
+                  #{hpzl}
+                </foreach>
+			</if>
+			<if test="ddmcsz!=null and ddmcsz!=''">
+				and jgMC in 
+	            <foreach collection="ddmcsz" item="ddmcsz" index="index"
+                  open="(" close=")" separator=",">
+                  #{ddmcsz}
+                </foreach>
+			</if>
+			<if test="hphm!=null and hphm!=''">
+				and hphm like #{hphm}
+			</if>
+			<if test="ssdw!=null and ssdw!=''">
+				and ssdw like #{ssdw}
+			</if>
+			<if test="sfzh!=null and sfzh!=''">
+				and rsfzh like #{sfzh}
+			</if>
+			<if test="kssj!=null and kssj !='' and jssj!=null and jssj!='' ">
+				and jgsj >=#{kssj} 
+				and jgsj <![CDATA[<=]]>#{jssj}
+			</if>
+		</where>
+		order by jgsj desc
+		limit #{page},#{rows}
+	</select>
+	<!-- 分页查询总数 -->
+	<select id="findAllFyCount" resultType="long"
+		parameterType="com.zlkj.visitor.dto.PulicCxtj">
+		select count(*) from entryinfo.t_cltxkb
+		<where>
+			<if test="xjfx!=null and xjfx!=''">
+				and fx=#{xjfx}
+			</if>
+			<if test="txzt!=null and txzt!=''">
+				and txzt=#{txzt}
+			</if>
+			<if test="hpzl!=null and hpzl!=''">
+				and hpzl in 
+	            <foreach collection="hpzl" item="hpzl" index="index"
+                  open="(" close=")" separator=",">
+                  #{hpzl}
+                </foreach>
+			</if>
+			<if test="hphm!=null and hphm!=''">
+				and hphm like #{hphm}
+			</if>
+			<if test="ssdw!=null and ssdw!=''">
+				and ssdw like #{ssdw}
+			</if>
+			<if test="sfzh!=null and sfzh!=''">
+				and rsfzh like #{sfzh}
+			</if>
+			<if test="ddmcsz!=null and ddmcsz!=''">
+				and jgMC in 
+	            <foreach collection="ddmcsz" item="ddmcsz" index="index"
+                  open="(" close=")" separator=",">
+                  #{ddmcsz}
+                </foreach>
+			</if>
+			<if test="kssj!=null and kssj !='' and jssj!=null and jssj!='' ">
+				and jgsj >=#{kssj} 
+				and jgsj <![CDATA[<=]]>#{jssj}
+			</if>
+		</where>
+	</select>	
+	<!-- 根据id查询 -->
+	<select id="findById" resultType="TCltxkb">
+		select * from entryinfo.t_cltxkb where id=#{0}
+	</select>	
+</mapper>
+

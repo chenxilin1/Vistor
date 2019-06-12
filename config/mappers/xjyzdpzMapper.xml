@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlkj.visitor.dao.XjyzdpzDao">
+	<!-- 获取所有的相机名称 -->
+	<select id="findByXjyzdmc" resultType="TXjyzdpz">
+		select * from entryinfo.t_xjyzdpz where xjmc=#{0}
+	</select>
+	<!-- 查询预置点是否已存在 -->
+	<select id="findByxjmcAndyzdmc" resultType="TXjyzdpz">
+		select * from entryinfo.t_xjyzdpz where xjyzdmc = #{0} and xjmc = #{1}
+	</select>
+		<!-- add -->
+	<insert id="save" parameterType="TXjyzdpz">
+		insert into entryinfo.t_xjyzdpz
+		<trim suffix=")" prefix="(" suffixOverrides=",">
+			<if test="tid !=null">
+				tid,
+			</if>
+			<if test="xjmc !=null" >
+				xjmc,
+			</if>
+			<if test="xjyzdmc !=null" >
+				xjyzdmc,
+			</if>
+			<if test="xjyzdbh !=null" >
+				xjyzdbh,
+			</if>
+		</trim>
+		<trim suffix=")" prefix=" values (" suffixOverrides=",">
+			<if test="tid !=null">
+				#{tid},
+			</if>
+			<if test="xjmc !=null" >
+				#{xjmc},
+			</if>
+			<if test="xjyzdmc !=null" >
+				#{xjyzdmc},
+			</if>
+			<if test="xjyzdbh !=null" >
+				#{xjyzdbh},
+			</if>
+		</trim>
+	</insert>
+			<!-- 删除信息 -->
+    <delete id="deleteXjyzdmc">
+    	delete from entryinfo.t_xjyzdpz WHERE xjyzdmc = #{0}
+   	 </delete>
+	
+	
+	
+</mapper>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlkj.visitor.dao.CljiTjDao">
+	<sql id="paramId">
+		<if test="tjfs==1">
+			DATE_FORMAT(jgsj,'%Y年')
+		</if>
+		<if test="tjfs==2">
+			DATE_FORMAT(jgsj,'%Y年%m月')
+		</if>
+		<if test="tjfs==3">
+			DATE_FORMAT(jgsj,'%Y年%m月%d日')
+		</if>
+		<if test="tjfs==4">
+			DATE_FORMAT(jgsj,'%Y年%m月%d日 %H时')
+		</if>
+
+	</sql>
+	<!--查询统计图 -->
+	<select id="finTjt" resultType="com.zlkj.visitor.dto.TjtCsDto"
+		parameterType="com.zlkj.visitor.dto.TjtCsDto">
+		select <include refid="paramId"></include> as txsj,count(1) as sl from entryinfo.t_cltxkb
+		<where>
+			<if test="txqk==0">
+				and (txzt ='0' or txzt ='-1')
+			</if>
+			<if test="txqk==1">
+				and txzt ='1'
+			</if>
+			<if test="hphm!=null and hphm!=''">
+				and hphm like #{hphm}
+			</if>
+			<if test="kssj!=null and kssj !='' and jssj!=null and jssj!='' ">
+				and jgsj >= #{kssj} 
+				and jgsj <![CDATA[<=]]> #{jssj}
+			</if>
+		</where>
+		group by(txsj)
+	</select>
+	<!-- 单击柱状图 -->
+	<select id="djtjt" resultType="com.zlkj.visitor.dto.TjtCsDto"
+			parameterType="com.zlkj.visitor.dto.TjtCsDto">
+			
+		<if test="sjzhou=='进口车辆'">
+			select count(1) as sl from  entryinfo.t_cltxkb t1 where
+			t1.txzt ='1' and t1.fx='进口'
+		</if>
+		<if test="sjzhou=='出口车辆'">
+			select count(1) as sl from  entryinfo.t_cltxkb t1 where 
+			t1.txzt ='1' and t1.fx='出口'
+		</if>
+		<if test="sjzhou=='滞留车辆'">
+			select count(1) as sl from( select max(jgsj) as jgsj,t.HPHM,t.fx,t.txzt,t.jgMC from t_cltxkb t  group by t.HPHM,t.jgsj  )t1  where 
+			t1.fx='进口' and t1.txzt='1'
+		</if>
+		<if test="dd!=null and dd!=''">
+			and t1.jgMC in 
+            <foreach collection="dd" item="dd" index="index"
+                 open="(" close=")" separator=",">
+                 #{dd}
+               </foreach>
+		</if>
+		<if test="hphm!=null and hphm!=''">
+			and t1.hphm like #{hphm}
+		</if>	
+		<if test="kssj!=null and kssj !='' and jssj!=null and jssj!='' ">
+			and t1.jgsj>=#{kssj} 
+			and t1.jgsj<![CDATA[<=]]>#{jssj}
+		</if>
+    </select>
+	<!-- 单击饼图数据 -->
+	<select id="djbtsj" resultType="TCltxkb"
+			parameterType="com.zlkj.visitor.dto.TjtCsDto">
+		<if test="sjzhou=='进口车辆'">
+			select * from  entryinfo.t_cltxkb t1 where
+			t1.txzt ='1' and t1.fx='进口'
+		</if>
+		<if test="sjzhou=='出口车辆'">
+			select * from  entryinfo.t_cltxkb t1 where 
+			t1.txzt ='1' and t1.fx='出口'
+		</if>
+		<if test="sjzhou=='滞留车辆'">
+			select * from( select max(jgsj) as jgsj,t.HPHM,t.fx,t.txzt,bqid,jgMc,hpzl,cllx,hpys from t_cltxkb t  
+			group by t.HPHM,t.jgsj  )t1  where 
+			t1.fx='进口' and t1.txzt='1'
+		</if>	
+		<if test="dd!=null and dd!=''">
+			and t1.jgMC in 
+            <foreach collection="dd" item="dd" index="index"
+                 open="(" close=")" separator=",">
+                 #{dd}
+               </foreach>
+		</if>
+		<if test="hphm!=null and hphm!=''">
+			and t1.hphm like #{hphm}
+		</if>
+		<if test="kssj!=null and kssj !='' and jssj!=null and jssj!='' ">
+			and t1.jgsj>=#{kssj} 
+			and t1.jgsj<![CDATA[<=]]>#{jssj}
+		</if>
+		limit #{page},#{rows}
+    </select>
+	<!-- 单击饼图数据-数量 -->
+	<select id="djbtsjCount" resultType="long"
+			parameterType="com.zlkj.visitor.dto.TjtCsDto">
+		<if test="sjzhou=='进口车辆'">
+			select count(1) as sl from  entryinfo.t_cltxkb t1 where
+			t1.txzt ='1' and t1.fx='进口'
+		</if>
+		<if test="sjzhou=='出口车辆'">
+			select count(1) as sl from  entryinfo.t_cltxkb t1 where 
+			t1.txzt ='1' and t1.fx='出口'
+		</if>
+		<if test="sjzhou=='滞留车辆'">
+			select count(1) as sl from( select max(jgsj) as jgsj,t.HPHM,t.fx,t.txzt,t.jgMc from t_cltxkb t  group by t.HPHM,t.jgsj  )t1  where 
+			t1.fx='进口' and t1.txzt='1'
+		</if>
+		<if test="dd!=null and dd!=''">
+			and t1.jgMC in 
+            <foreach collection="dd" item="dd" index="index"
+                 open="(" close=")" separator=",">
+                 #{dd}
+               </foreach>
+		</if>
+		<if test="hphm!=null and hphm!=''">
+			and t1.hphm like #{hphm}
+		</if>	
+		<if test="kssj!=null and kssj !='' and jssj!=null and jssj!='' ">
+			and t1.jgsj>=#{kssj} 
+			and t1.jgsj<![CDATA[<=]]>#{jssj}
+		</if>
+    </select>
+	<!--根据地点查询该地点下的数据的统计图 -->
+	<select id="findByDd" resultType="long"
+		parameterType="com.zlkj.visitor.dto.TjtCsDto">
+		select count(1) from entryinfo.t_cltxkb
+		<where>
+			<if test="txqk==0">
+				and (txzt ='0' or txzt ='-1')
+			</if>
+			<if test="txqk==1">
+				and txzt ='1'
+			</if>
+			<if test="txdd!=null and txdd !=''">
+				and jgMC =#{txdd}
+			</if>
+			<if test="hphm!=null and hphm!=''">
+				and hphm like #{hphm}
+			</if>
+			<if test="kssj!=null and kssj !='' and jssj!=null and jssj!='' ">
+				and jgsj >= #{kssj} 
+				and jgsj <![CDATA[<=]]> #{jssj}
+			</if>
+		</where>
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
+

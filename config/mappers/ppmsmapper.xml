@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlkj.visitor.dao.PpmsDao">
+	<!-- 分页查询 -->
+	<select id="finAll" resultType="TJgaddress"
+		parameterType="com.zlkj.visitor.dto.PulicCxtj">
+		select * from
+		entryinfo.t_jgaddress
+		<where>
+			<if test="ppms!=null and ppms!=''">
+				and 
+				<foreach collection="ppms" index="index" item="ppms"  separator="or" >
+					ppms like #{ppms}
+				</foreach>
+			</if>
+			<if test="note==0">
+				and ppms not regexp '(-)'
+			</if>
+			<if test="note==1">
+				and ppms regexp '(-)'
+			</if>
+			<if test="xjsbbh!=null and xjsbbh!=''">
+				and xjsbbh = #{xjsbbh}
+			</if>
+			<if test="ckip!=null and ckip!=''">
+				and ckip = #{ckip}
+			</if>
+			<if test="rfidms!=null and rfidms!=''">
+				and rfidms = #{rfidms}
+			</if>
+			<if test="ddmcsz!=null and ddmcsz!=''">
+				and jgmc in 
+	            <foreach collection="ddmcsz" item="ddmcsz" index="index"
+                  open="(" close=")" separator=",">
+                  #{ddmcsz}
+                </foreach>
+			</if>
+		</where>
+		order by id ASC
+		limit #{page},#{rows}
+	</select>
+	<!-- 分页查询总数 -->
+	<select id="findAllCount" resultType="long"
+		parameterType="com.zlkj.visitor.dto.PulicCxtj">
+		select count(*) from entryinfo.t_jgaddress
+		<where>
+			<if test="ppms!=null and ppms!=''">
+				and 
+				<foreach collection="ppms" index="index" item="ppms"  separator="or" >
+					ppms like #{ppms}
+				</foreach>
+			</if>
+			<if test="note==0">
+				and ppms not regexp '(-)'
+			</if>
+			<if test="note==1">
+				and ppms regexp '(-)'
+			</if>
+			<if test="xjsbbh!=null and xjsbbh!=''">
+				and xjsbbh = #{xjsbbh}
+			</if>
+			<if test="ckip!=null and ckip!=''">
+				and ckip = #{ckip}
+			</if>
+			<if test="rfidms!=null and rfidms!=''">
+				and rfidms = #{rfidms}
+			</if>
+			<if test="ddmcsz!=null and ddmcsz!=''">
+				and jgmc in 
+	            <foreach collection="ddmcsz" item="ddmcsz" index="index"
+                  open="(" close=")" separator=",">
+                  #{ddmcsz}
+                </foreach>
+			</if>
+		</where>
+	</select>	
+		<!-- 添加 -->
+	<insert id="add" parameterType="TJgaddress">
+		insert into entryinfo.t_jgaddress
+		<trim suffix=")" prefix="(" suffixOverrides=",">
+			<if test="jgmc !=null">
+				jgmc,
+			</if>
+			<if test="jkip !=null" >
+				jkip,
+			</if>
+			<if test="xjsbbh !=null" >
+				xjsbbh,
+			</if>
+			<if test="xjfx !=null" >
+				xjfx,
+			</if>
+			<if test="ppms !=null" >
+				ppms,
+			</if>
+			<if test="ckip !=null" >
+				ckip,
+			</if>
+			<if test="dk !=null" >
+				dk,
+			</if>
+			<if test="dzip !=null" >
+				dzip,
+			</if>
+			<if test="dkqip !=null" >
+				dkqip,
+			</if>
+			<if test="rfidms !=null" >
+				rfidms,
+			</if>
+			<if test="ckclfs !=null" >
+				ckclfs,
+			</if>
+		</trim>
+		<trim suffix=")" prefix=" values (" suffixOverrides=",">
+			<if test="jgmc !=null">
+				#{jgmc},
+			</if>
+			<if test="jkip !=null" >
+				#{jkip},
+			</if>
+			<if test="xjsbbh !=null" >
+				#{xjsbbh},
+			</if>
+			<if test="xjfx !=null" >
+				#{xjfx},
+			</if>
+			<if test="ppms !=null" >
+				#{ppms},
+			</if>
+			<if test="ckip !=null" >
+				#{ckip},
+			</if>
+			<if test="dk !=null" >
+				#{dk},
+			</if>
+			<if test="dzip !=null" >
+				#{dzip},
+			</if>
+			<if test="dkqip !=null" >
+				#{dkqip},
+			</if>
+			<if test="rfidms !=null" >
+				#{rfidms},
+			</if>
+			<if test="ckclfs !=null" >
+				#{ckclfs},
+			</if>
+		</trim>
+	</insert>
+	<!-- 添加 end -->
+	<!-- 删除信息 -->
+    <delete id="delete">
+    	delete from 
+    	entryinfo.t_jgaddress WHERE id in
+    	<foreach collection="array" index="index" item="item"  open="(" separator="," close=")">
+			#{item}
+		</foreach>
+   	 </delete>
+    <!-- 删除信息end -->
+    <!-- 修改信息end -->
+	<update id="update">
+		update entryinfo.t_jgaddress
+		<set>
+			<if test="jgmc !=null">
+				jgmc=#{jgmc},
+			</if>
+			<if test="jkip !=null" >
+				jkip=#{jkip},
+			</if>
+			<if test="xjsbbh !=null" >
+				xjsbbh=#{xjsbbh},
+			</if>
+			<if test="xjfx !=null" >
+				xjfx=#{xjfx},
+			</if>
+			<if test="ppms !=null" >
+				ppms=#{ppms},
+			</if>
+			<if test="ckip !=null" >
+				ckip=#{ckip},
+			</if>
+			<if test="dk !=null" >
+				dk=#{dk},
+			</if>
+			<if test="dzip !=null" >
+				dzip=#{dzip},
+			</if>
+			<if test="dkqip !=null" >
+				dkqip=#{dkqip},
+			</if>
+			<if test="rfidms !=null" >
+				rfidms=#{rfidms},
+			</if>
+			<if test="ckclfs !=null" >
+				ckclfs=#{ckclfs},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	<!-- 查询匹配模式里的地点是否已经配置 -->
+	<select id="findByDdmc" resultType="TJgaddress">
+		select * from entryinfo.t_jgaddress where jgmc=#{0}
+	</select>
+	<!-- 查询匹配模式里的ip是否已被征用 -->
+	<select id="findByPpmsIp" resultType="TJgaddress">
+		select * from entryinfo.t_jgaddress where jkip=#{0}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>
+
